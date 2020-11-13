@@ -21,10 +21,14 @@ mongoose.connect(
   );
 
 
-// app.use(require("./routes/api-routes.js"));
+app.use(require("./routes/api-routes.js"));
 
-app.use("*", (req, res) => {
-res.send("hello world")
+app.get("/exercise", (req, res) => {
+  res.sendFile('./public/exercise.html', {root: __dirname});
+});
+
+app.get("/stats", (req, res) => {
+  res.sendFile('./public/stats.html', {root: __dirname});
 });
 
 app.listen(PORT, () => {
