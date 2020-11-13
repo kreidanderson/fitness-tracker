@@ -49,10 +49,10 @@ const workoutSchema = new Schema([{
   toJSON: {
     virtuals: true
 }
-}):
+});
 
 
 
-const Workout = mongoose.model("workout", workoutSchema);
+const Workouts = mongoose.model("workouts", workoutSchema);
 
-module.exports = Workout;
+module.exports = Workouts;
