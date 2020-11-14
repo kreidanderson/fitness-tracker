@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
 const workoutSchema = new Schema([{
   day: {
-    type: String,
-    // trim: true,
+    type: Date,
+    default: Date.now
+    // trim: true,mong
     // required: "Enter a name for transaction"
   },
   exercises: [ {
@@ -41,17 +41,29 @@ const workoutSchema = new Schema([{
       // required: "Enter an amount"
     }
   }
-  ]
+  ],
+
+  totalDuration: { type: Number }
   
 }],
-
 {
   toJSON: {
     virtuals: true
 }
 });
 
-
+workoutSchema.pre('save', function() {
+  // loop over the exercises
+  let totalDuration = 0;
+  // add up all the durations
+  this.exercises.forEach(exercise => {
+    totalDuration += exercise.duration;
+  });
+  
+  this.set( {totalDuration: totalDuration} );
+  // set to total duration
+  console.log('set totalDuration');
+});
 
 const Workouts = mongoose.model("workouts", workoutSchema);
 
